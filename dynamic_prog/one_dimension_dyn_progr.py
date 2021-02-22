@@ -35,3 +35,23 @@ def count_trajectories(n: int, allowed: list):
         if allowed[i]:
             k[i] = k[i-1] + k[i-2] + k[i-3]
     return k[n]
+
+
+# Минимальная стоимость достижения клетки N
+# price[i] - цена за посещение клетки i
+# C[i] - минимально возможная стоимость достижения клетки i
+def count_min_cost(n: int, price: list):
+    """
+    Задача о кузнечике №3.
+    Кузнечик может прыгать по числовой оси на +1 и +2
+    :param n: Ноер точки в которую необходимо попасть
+    :param price: список, в котором указаны стоимости посещения i-х клеток
+    :return: Минимальная стоимость посещения клетки n
+    """
+    # Рекуррентная формула -  C[i] = price[i] + min(C[i-1], C[i-2])
+    # C[1] = price[1]
+    # C[2] = price[1] + price[2]
+    C = [None, price[1], price[1] + price[2]] + [0] * (n-2)
+    for i in range(3, n+1):
+        C[i] = price[i] + min(C[i-1], C[i-2])
+    return C[n]
