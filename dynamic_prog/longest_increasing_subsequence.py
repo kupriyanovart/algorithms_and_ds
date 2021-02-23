@@ -16,5 +16,5 @@ def len_longest_increasing_subsequence(A: list):
     return max(F)
 
 
-a = [1, 2, 4, 2, 11, 12, 13, 15, 19]
+a = [1, 2, 4, 2, 11, 12, 13, 15, 19, 0, 1]
 print(len_longest_increasing_subsequence(a))
