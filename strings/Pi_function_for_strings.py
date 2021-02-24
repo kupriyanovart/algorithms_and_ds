@@ -38,10 +38,10 @@ def kmp(s: str):
     return prefix
 
 
-# алгоритм поиска подстроки в строке с использованием префикс функции
-
+# алгоритм поиска подстроки в строке с использованием префикс функции (https://brestprog.by/topics/prefixfunction/)
+# символ '#' - специальный символ, гарантированно не встречающийся в строках s и sub
 def search_substring(s: str, sub: str):
-    modified_string = sub + '~' + s
+    modified_string = sub + '#' + s
     prefix = kmp(modified_string)
     res = []
     for i in range(len(prefix)):
@@ -49,5 +49,3 @@ def search_substring(s: str, sub: str):
             res.append(i - 2 * len(sub))
     return res
 
-
-print(search_substring('abcdabcshshabc1231abcdef', 'abc'))
