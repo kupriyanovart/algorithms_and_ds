@@ -20,3 +20,14 @@ def z_fun(s: str):
             r = i+z[i]-1
 
     return z
+
+
+
+def search_substring(s: str, sub: str):
+    modified_string = sub + '#' + s
+    prefix = z_fun(modified_string)
+    res = []
+    for i in range(len(prefix)):
+        if prefix[i] == len(sub):
+            res.append(i - len(sub) - 1)
+    return res
