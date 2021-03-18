@@ -79,3 +79,51 @@ def graph_adjacency_list(N: int, M: int):
 # Список смежности лежит в срезе edges[offset[i] : offset[i+1]]
 
 
+# Обход графа в глубину (Deep firt search - DFS)
+def dfs(vertex, graph, used):
+    used.add(vertex)
+    for neighbour in graph[vertex]:
+        if neighbour not in used:
+            dfs(neighbour, graph, used)
+
+
+# Подсчет количества компонент связности графа
+def main():
+    graph = graph_adjacency_list(4, 5)
+    used = set()  # псевдокод used = стартовая вершина
+    N = 0  # Количество компонент связности
+    for vertex in graph:
+        if vertex not in used:
+            dfs(vertex, graph, used)
+            N += 1
+
+    print(N)
+
+# Топологическая сортировка. Алгоритм Тарьяна
+# Если орграф не содержит циклов, то его вершины можно пронумеровать так, что любое ребро идет от вершины
+# с меньшим номером к вершине с большим номером
+
+# u - число от 1 до N (индексы вершин)
+# visited - [False] * (n+1)
+# ans = []
+
+
+def dfs_1(start, graph, visited, ans):
+    visited[start] = True
+    for u in graph[start]:
+        if not visited[u]:
+            dfs_1(u, graph, visited, ans)
+    ans.append(start)
+
+
+def main_1():
+    N = 4
+    M = N + 1
+    graph = graph_adjacency_list(N, M)
+    visited = [False] * (N+1)
+    ans = []
+    for i in range(1, N+1):
+        if not visited[i]:
+            dfs_1(i, graph, visited, ans)
+
+    ans[:] = ans[::-1]
