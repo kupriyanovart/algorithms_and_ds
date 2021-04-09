@@ -62,6 +62,9 @@ def graph_adjacency_list(N: int, M: int):
                 G[v] = {u}
             else:
                 G[v].add(u)
+    for i in range(1, N+1):  # Добавляем для хранения изолированных вершин
+        if str(i) not in G:
+            G[str(i)] = set()
     return G
 
 # 3. Компактное хранение графов (Для неизменяемых графов)
@@ -79,7 +82,7 @@ def graph_adjacency_list(N: int, M: int):
 # Список смежности лежит в срезе edges[offset[i] : offset[i+1]]
 
 
-# Обход графа в глубину (Deep firt search - DFS)
+# Обход графа в глубину (Deep first search - DFS)
 def dfs(vertex, graph, used):
     used.add(vertex)
     for neighbour in graph[vertex]:
@@ -127,3 +130,28 @@ def main_1():
             dfs_1(i, graph, visited, ans)
 
     ans[:] = ans[::-1]
+
+
+# Та же самая функция что и dfs(vertex, graph, used)
+def dfs_3(vertex, graph, used):
+    used.add(vertex)
+    for neighbour in graph[vertex]:
+        if neighbour not in used:
+            dfs_3(neighbour, graph, used)
+
+
+# та же самая задача решается функцией main()
+def main_2():
+    """
+    Найти количество компонент связности неориентированного графа при помощи поиска в глубину.
+    """
+    N, M = map(int, input().split())
+    graph = graph_adjacency_list(N, M)
+    used = set()
+    C = 0
+    for vertex in graph:
+        if vertex not in used:
+            dfs_3(vertex, graph, used)
+            C += 1
+    print(graph)
+    print(C)
